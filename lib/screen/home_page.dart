@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controller/user_api_controller.dart';
+import 'package:i_wallet_case/model/user_model.dart';
+import 'package:i_wallet_case/model/user_photo.dart';
 
 class UsersPage extends StatelessWidget {
   const UsersPage({super.key});
@@ -92,15 +94,13 @@ class UsersPage extends StatelessWidget {
                 title: Text(e.name.toString()),
                 subtitle: Text(e.username.toString()),
                 leading: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: const NetworkImage('https://l24.im/31Vfs'),
-                  foregroundImage: NetworkImage(p.downloadUrl.toString()),
-                ),
+                    radius: 30,
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: const NetworkImage('https://l24.im/31Vfs'),
+                    foregroundImage: NetworkImage(p.downloadUrl.toString())),
                 trailing: IconButton(
-                  onPressed: () => userDialog(context, _, index),
-                  icon: const Icon(Icons.arrow_forward_ios)
-                ),
+                    onPressed: () => userDialog(context, p, e),
+                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             );
           },
@@ -109,13 +109,7 @@ class UsersPage extends StatelessWidget {
     });
   }
 
-  Future<dynamic> userDialog(
-      BuildContext context, UserApiController _, int index) {
-    final users = _.filteredUsers;
-    final userPhoto = _.userPhoto;
-
-    final e = users[index];
-    final p = userPhoto[e.id! - 1];
+  Future<dynamic> userDialog(BuildContext context, UserPhoto p, UserModel e) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -131,40 +125,36 @@ class UsersPage extends StatelessWidget {
                 Text(e.name.toString(), style: style()),
                 Text(e.username.toString(), style: themeTextStyle(context)),
                 ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  visualDensity: VisualDensity.compact,
-                  leadingAndTrailingTextStyle: leadingStyle(context),
-                  leading: const Text('Email:'),
-                  title: Text(e.email.toString())
-                ),
+                    contentPadding: EdgeInsets.zero,
+                    visualDensity: VisualDensity.compact,
+                    leadingAndTrailingTextStyle: leadingStyle(context),
+                    leading: const Text('Email:'),
+                    title: Text(e.email.toString())),
                 ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  visualDensity: VisualDensity.compact,
-                  leadingAndTrailingTextStyle: leadingStyle(context),
-                  leading: const Text('Telefon:'),
-                  title: Text(e.phone.toString())
-                ),
+                    contentPadding: EdgeInsets.zero,
+                    visualDensity: VisualDensity.compact,
+                    leadingAndTrailingTextStyle: leadingStyle(context),
+                    leading: const Text('Telefon:'),
+                    title: Text(e.phone.toString())),
                 ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  visualDensity: VisualDensity.compact,
-                  leadingAndTrailingTextStyle: leadingStyle(context),
-                  leading: const Text('Adres:'),
-                  title: Text(e.address!.street.toString())
-                ),
+                    contentPadding: EdgeInsets.zero,
+                    visualDensity: VisualDensity.compact,
+                    leadingAndTrailingTextStyle: leadingStyle(context),
+                    leading: const Text('Adres:'),
+                    title: Text(e.address!.street.toString())),
                 ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  visualDensity: VisualDensity.compact,
-                  leadingAndTrailingTextStyle: leadingStyle(context),
-                  leading: const Text('Şehir:'),
-                  title: Text(e.address!.city.toString())
-                ),
+                    contentPadding: EdgeInsets.zero,
+                    visualDensity: VisualDensity.compact,
+                    leadingAndTrailingTextStyle: leadingStyle(context),
+                    leading: const Text('Şehir:'),
+                    title: Text(e.address!.city.toString())),
                 ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leadingAndTrailingTextStyle: leadingStyle(context),
-                  visualDensity: VisualDensity.compact,
-                  leading: const Text('Konum:'),
-                  title: Text('${e.address!.geo!.lat}/${e.address!.geo!.lng}')
-                ),
+                    contentPadding: EdgeInsets.zero,
+                    leadingAndTrailingTextStyle: leadingStyle(context),
+                    visualDensity: VisualDensity.compact,
+                    leading: const Text('Konum:'),
+                    title:
+                        Text('${e.address!.geo!.lat}/${e.address!.geo!.lng}')),
               ],
             ),
           );
